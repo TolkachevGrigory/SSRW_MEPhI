@@ -208,12 +208,16 @@
        //dataloader->AddVariable( "myvar2 := var1-var2", "Expression 2", "", 'F' );
        //dataloader->AddVariable( "var3",                "Variable 3", "units", 'F' );
        //dataloader->AddVariable( "var4",                "Variable 4", "units", 'F' );
+       dataloader->AddVariable( "lep_0_p4->Pt()","P_{T}","[GeV]", 'D' );
+       dataloader->AddVariable( "met_reco_p4->E()","E^{miss}_{T}","[GeV]",'D' );
+       dataloader->AddVariable( "dphi := lep_0_p4->Phi() - met_reco_p4->Phi()","PHI" 'D' );
+       dataloader->AddVariable( "Mt := sqrt(2*lep_0_p4->Pt()*met_reco_p4->Pt()*(1-cos(lep_0_p4->Phi()-met_reco_p4->Phi())))","M_{T}","[GeV]", 'D' );
 
        // You can add so-called "Spectator variables", which are not used in the MVA training,
        // but will appear in the final "TestTree" produced by TMVA. This TestTree will contain the
        // input variables, the response values of all trained MVAs, and the spectator variables
 
-       dataloader->AddSpectator( "lep_0_p4->Pt()",  "Spectator 1", "units", 'F' );
+      // dataloader->AddSpectator( "lep_0_p4->Pt()",  "Spectator 1", "units", 'F' );
       // dataloader->AddSpectator( "spec2 := var1*3",  "Spectator 2", "units", 'F' );
 
 
@@ -268,8 +272,7 @@
        // Set individual event weights (the variables must exist in the original TTree)
        // -  for signal    : `dataloader->SetSignalWeightExpression    ("weight1*weight2");`
        // -  for background: `dataloader->SetBackgroundWeightExpression("weight1*weight2");`
-       dataloader->SetBackgroundWeightExpression( "weight" );
-
+     //  dataloader->SetBackgroundWeightExpression( "weight" );
        // Apply additional cuts on the signal and background samples (can be different)
        TCut mycuts = ""; // for example: TCut mycuts = "abs(var1)<0.5 && abs(var2-0.5)<1";
        TCut mycutb = ""; // for example: TCut mycutb = "abs(var1)<0.5";
