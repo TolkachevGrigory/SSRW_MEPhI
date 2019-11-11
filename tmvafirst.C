@@ -163,8 +163,8 @@
 
     // Read training and test data
     // (it is also possible to use ASCII format as input -> see TMVA Users Guide)	TString bg_fname = "../Users/grigorijtolkacev/Desktop/ATLAS/SW/mon_el/background/minus.6.SM_WLepton.root";
-	TString sig_fname = "../Users/grigorijtolkacev/Desktop/ATLAS/SW/mon_el/signal/user.dponomar.19427982._000002.SM_WLepton.root";
-     TString bg_fname = "../Users/grigorijtolkacev/Desktop/ATLAS/SW/mon_el/background/minus.6.SM_WLepton.root";
+	TString sig_fname = "/Users/grigorijtolkacev/Desktop/ATLAS/SW/mon_el/signal/user.dponomar.19427982._000002.SM_WLepton.root";
+     TString bg_fname = "/Users/grigorijtolkacev/Desktop/ATLAS/SW/mon_el/background/minus.6.SM_WLepton.root";
 
 	TFile *bg_input = TFile::Open( bg_fname );
 	TFile *sig_input = TFile::Open( sig_fname );
