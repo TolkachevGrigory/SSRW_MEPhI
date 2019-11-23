@@ -12,24 +12,37 @@ void сreate_tree_and_cutflow()
 
  const int nbins = 7;
     
-    TFile *f11 = new TFile("signal_with_cuts_mu_minus.root","recreate");
+    TFile *f11 = new TFile("sandb_with_cuts_mu_minus.root","recreate");
        
-       TTree *s_tree_with_cuts = new TTree("s_tree_with_cuts","Simple Tree");
-       double_t s_Pt, s_metE, s_dPhi,s_Mt;
-      
+       Double_t s_Pt;
+       Double_t s_metE;
+       Double_t s_dPhi;
+       Double_t s_Mt;
+       ULong64_t so_event;
+       ULong64_t s_event;
     
-       
-       s_tree_with_cuts->Branch("Pt","&s_Pt","Pt/D");
-       s_tree_with_cuts->Branch("metE","&s_metE","metE/D");
-       s_tree_with_cuts->Branch("dPhi","&s_dPhi","dPhi/D");
-       s_tree_with_cuts->Branch("Mt","&s_Mt","Mt/D");
-       
-       TTree *b_tree_with_cuts = new TTree("s_tree_with_cuts","Simple Tree");
-       double_t b_Pt, b_metE, b_dPhi, b_Mt;
-       b_tree_with_cuts->Branch("Pt","&b_Pt","Pt/D");
-       b_tree_with_cuts->Branch("metE","&b_metE","metE/D");
-       b_tree_with_cuts->Branch("dPhi","&b_dPhi","dPhi/D");
-       b_tree_with_cuts->Branch("Mt","&b_Mt","Mt/D");
+       TTree *s_tree_with_cuts = new TTree("s_tree_with_cuts","Simple Tree");
+       s_tree_with_cuts->Branch("EventBranch", &s_event, "EventBranch/I");
+       s_tree_with_cuts->Branch("Pt",&s_Pt,"Pt/D");
+       s_tree_with_cuts->Branch("metE",&s_metE,"metE/D");
+       s_tree_with_cuts->Branch("dPhi",&s_dPhi,"dPhi/D");
+       s_tree_with_cuts->Branch("Mt",&s_Mt,"Mt/D");
+    
+       Double_t b_Pt;
+       Double_t b_metE;
+       Double_t b_dPhi;
+       Double_t  b_Mt;
+       ULong64_t bo_event;
+       ULong64_t b_event;
+    
+       TTree *b_tree_with_cuts = new TTree("b_tree_with_cuts","Simple Tree");
+       b_tree_with_cuts->Branch("EventBranch", &b_event,"EventBranch/I");
+       b_tree_with_cuts->Branch("Pt",&b_Pt,"Pt/D");
+       b_tree_with_cuts->Branch("metE",&b_metE,"metE/D");
+       b_tree_with_cuts->Branch("dPhi",&b_dPhi,"dPhi/D");
+       b_tree_with_cuts->Branch("Mt",&b_Mt,"Mt/D");
+    
+
        
        
     
@@ -73,10 +86,10 @@ void сreate_tree_and_cutflow()
   int n_mu_t = 0;
   UInt_t lep1 = 0;
   UInt_t lep2 = 0;
-  double_t tau_mt = 0;
-  double_t mu_mt = 0;
+  Float_t tau_mt = 0;
+  Float_t mu_mt = 0;
 
-    
+  taunu->SetBranchAddress("event_number", &so_event);
   taunu->SetBranchAddress("lep_0_p4", &lep_tau);
   taunu->SetBranchAddress("met_reco_p4", &met_tau);
   taunu->SetBranchAddress("lep_0_id_medium", &tau_medium);
@@ -88,6 +101,7 @@ void сreate_tree_and_cutflow()
   taunu->SetBranchAddress("lep_0", &lep1);
   taunu->SetBranchAddress("lepmet_mt", &tau_mt);
     
+  munu->SetBranchAddress("event_number", &bo_event);
   munu->SetBranchAddress("lep_0_p4", &lep_mu);
   munu->SetBranchAddress("met_reco_p4", &met_mu);
   munu->SetBranchAddress("lep_0_id_medium", &mu_medium);
@@ -105,6 +119,7 @@ void сreate_tree_and_cutflow()
     {
         taunu->GetEntry(i);
         
+        
         signal_cutflowhisto->Fill(1);
         
         double_t tau_pt = lep_tau->Pt();
@@ -115,31 +130,34 @@ void сreate_tree_and_cutflow()
         double_t taumet_phi = met_tau->Phi();
         double_t taumet_energy = met_tau->E();
         double_t phi_tau = fabs(tau_phi-taumet_phi);
-     //   double_t taunu_mt = sqrt(2*tau_pt*taumet_pt*(1-cos(phi_tau)));
+       // double_t taunu_mt = sqrt(2*tau_pt*taumet_pt*(1-cos(phi_tau)));
         
        // if ( !(fabs(tau_eta)<1.37 || fabs(tau_eta)>1.52) && (fabs(tau_eta)<2.47) )continue;
 
        // if(!((n_tau_e+n_tau_mu)==0 && n_tau_t == 1))continue;
         // Cut for QCD
-        
+        s_event = so_event;
         if ( !(tau_pt > 25) ) continue;
         signal_cutflowhisto->Fill(2);
-        s_Pt = lep_tau->Pt();
+        s_Pt = tau_pt;
         
         if ( !(taumet_energy > 25) ) continue;
-        s_metE = met_tau->E();
-        signal_cutflowhisto->Fill(3);
-
-        if ( !(tau_mt > 40) ) continue;
-        b_Mt = tau_mt;
-        signal_cutflowhisto->Fill(4);
+        s_metE = tau_energy;
         
+        signal_cutflowhisto->Fill(3);
+        if ( !(tau_mt > 40) ) continue;
+        s_Mt = tau_mt;
+        
+        signal_cutflowhisto->Fill(4);
         if ( !(tau_medium == 1))continue;
         signal_cutflowhisto->Fill(5);
+        
         if ( !(tau_isoTight == 1))continue;
         signal_cutflowhisto->Fill(6);
+        
         if ( !(tau_n_bjets==0))continue;
         signal_cutflowhisto->Fill(7);
+        
         
         
         if(phi_tau > 3.14159)
@@ -162,7 +180,8 @@ void сreate_tree_and_cutflow()
       {
           
              munu->GetEntry(i);
-          
+        
+          b_event = bo_event;
           double_t mu_pt = lep_mu->Pt();
           double_t mu_eta = lep_mu->Eta();
           double_t mu_phi = lep_mu->Phi();
@@ -181,11 +200,11 @@ void сreate_tree_and_cutflow()
 
           if ( !(mu_pt > 25) ) continue;
           beackground_cutflowhisto->Fill(2);
-          b_Pt = lep_mu->Pt();
+          b_Pt = mu_pt;
 
           if ( !(mumet_energy > 25) ) continue;
           beackground_cutflowhisto->Fill(3);
-          b_metE = met_mu->E();
+          b_metE =  mu_energy;
           
           if ( !(mu_mt > 40) ) continue;
           beackground_cutflowhisto->Fill(4);
@@ -224,15 +243,15 @@ void сreate_tree_and_cutflow()
     
     c->cd(1);
     signal_cutflowhisto->Draw();
+    signal_cutflowhisto->Write();
     s_tree_with_cuts->Write();
+   
     
     c->cd(2);
-       signal_cutflowhisto->Draw();
+       beackground_cutflowhisto->Draw();
+       beackground_cutflowhisto->Write();
        b_tree_with_cuts->Write();
-    
-    
- 
-    
+
    // c->SaveAs("/Users/grigorijtolkacev/Desktop/ATLAS/SW/lep_eandtau_minus_pt.pdf");
  
     
