@@ -26,8 +26,8 @@ const int nbins = 7;
     Double_t Mt;
     ULong64_t event;
     
-    
-    TTree *tree_with_cuts = new TTree("outPutFile","Simple Tree");
+    TFile *f11 = new TFile("outPutFile","recreate");
+    TTree *tree_with_cuts = new TTree("tree_with_cuts","Simple Tree");
     tree_with_cuts->Branch("EventBranch", &event, "EventBranch/I");
     tree_with_cuts->Branch("Pt",&Pt,"Pt/D");
     tree_with_cuts->Branch("metE",&metE,"metE/D");
