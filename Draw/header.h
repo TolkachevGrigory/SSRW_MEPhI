@@ -5,7 +5,7 @@
 /** Here is the place we will save all output */
 TString GetUnionPDFName()
 {
-  return TString("AllPlots.pdf");
+	return TString("AllPlots.pdf");
 }
 
 
@@ -23,10 +23,10 @@ int NormalizeXaxis(TH1* histData)
 /** Provides list of some nice colors */
 int GetNiceColor(const int nHist)
 {
-  if(nHist>=10) 
-     Fatal("GetNiceColor", "You are asking color for newNHist=%d, but %d is a limit.", nHist, 10);
+	if (nHist >= 10)
+		Fatal("GetNiceColor", "You are asking color for newNHist=%d, but %d is a limit.", nHist, 10);
 
-  int arrColor[10] = { kRed, kOrange-3, kGreen+2, kCyan+2, kBlue+2, kMagenta+2, 8, 28, 7, kYellow+2 };
-  cout << "GetNiceColor():: Return color " << arrColor[nHist];
-  return arrColor[nHist];
+	int arrColor[10] = { kRed, kOrange - 3, kGreen + 2, kCyan + 2, kBlue + 2, kMagenta + 2, 8, 28, 7, kYellow + 2 };
+	cout << "GetNiceColor():: Return color " << arrColor[nHist];
+	return arrColor[nHist];
 }
