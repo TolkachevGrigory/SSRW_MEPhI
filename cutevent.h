@@ -3,7 +3,6 @@
 #define cutevent_h
 
 #include <TROOT.h>
-#include <TChain.h>
 #include <TFile.h>
 
 // Header file for the classes stored in the TTree if any.
