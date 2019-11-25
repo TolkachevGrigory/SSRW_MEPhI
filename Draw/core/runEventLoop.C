@@ -49,7 +49,7 @@ int runEventLoop(TString inputFilePath = "passToInputRootFile", bool isSignal = 
 	tree->SetBranchAddress("lep_0_p4", &lep);
 	tree->SetBranchAddress("met_reco_p4", &met);
 	tree->SetBranchAddress("lep_0_id_medium", &medium);
-	// tree->SetBranchAddress("lep_0_iso_FCTight", &isoTight);
+	tree->SetBranchAddress("lep_0_iso_FCTight", &isoTight);
 	tree->SetBranchAddress("n_bjets", &n_bjets);
 	tree->SetBranchAddress("n_electrons", &n_e);
 	tree->SetBranchAddress("n_muons", &n_mu);
