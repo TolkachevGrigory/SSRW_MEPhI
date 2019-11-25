@@ -15,14 +15,14 @@ int runEventLoop(TString inputFilePath = "passToInputRootFile", bool isSignal = 
 	TFile* inputFile = new TFile(inputFilePath, "READ");
 	TTree* tree = (TTree*)inputFile->Get("NOMINAL");
 
-	// Output TFile 
+	// Output TFile
 	TFile *outputFile = new TFile("outPutFile.root", "recreate");
 
 	TCanvas *canvas = new TCanvas(inputFilePath + "_cutflow", inputFilePath + "_cutflow", 900, 600);
 
 	// Cutflow Hist
 	const int nbins = 7;
-	TH1D *cutflowhisto = new TH1D (name_affix+"_cutflow", "Events", nbins, 1, nbins + 1);
+	TH1D *cutflowhisto = new TH1D (name_affix + "_cutflow", "Events", nbins, 1, nbins + 1);
 	cutflowhisto->GetXaxis()->SetBinLabel(1, "All");
 	cutflowhisto->GetXaxis()->SetBinLabel(2, "pt>25");
 	cutflowhisto->GetXaxis()->SetBinLabel(3, "energy>25");
@@ -65,7 +65,7 @@ int runEventLoop(TString inputFilePath = "passToInputRootFile", bool isSignal = 
 	ULong64_t event;
 
 	TString treeName = name_affix;
-	TString treeTitle = name_affix+" tree";
+	TString treeTitle = name_affix + " tree";
 
 	TTree *tree_with_cuts = new TTree(treeName, treeTitle);
 
@@ -155,7 +155,7 @@ int runEventLoop(TString inputFilePath = "passToInputRootFile", bool isSignal = 
 
 	// Draw
 	cutflowhisto->Draw();
-
+	
 	cutflowhisto->Write();
 
 	// // Save canvas to the union pdf file
