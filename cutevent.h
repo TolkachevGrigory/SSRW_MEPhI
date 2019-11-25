@@ -9,7 +9,7 @@
 // Header file for the classes stored in the TTree if any.
 #include "TVector3.h"
 #include "TLorentzVector.h"
-class NOMINAL {
+class cuteven {
 
 
 int eventLoop(const char* inputFile, const char* outPutFile) {
