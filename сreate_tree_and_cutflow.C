@@ -47,7 +47,7 @@ void сreate_tree_and_cutflow()
        
     
        TH1D *signal_cutflowhisto = new TH1D ("cutflow","Events", nbins,1,nbins+1);
-       TH1D *beackground_cutflowhisto = new TH1D ("cutflow","Events", nbins,1,nbins+1);
+       TH1D *background_cutflowhisto = new TH1D ("cutflow","Events", nbins,1,nbins+1);
     
        signal_cutflowhisto->GetXaxis()->SetBinLabel(1,"All");
        signal_cutflowhisto->GetXaxis()->SetBinLabel(2,"tau_pt>25");
@@ -58,13 +58,13 @@ void сreate_tree_and_cutflow()
        signal_cutflowhisto->GetXaxis()->SetBinLabel(7,"tau_n_bjets==0");
        
        
-       beackground_cutflowhisto->GetXaxis()->SetBinLabel(1,"All");
-       beackground_cutflowhisto->GetXaxis()->SetBinLabel(2,"tau_pt>25");
-       beackground_cutflowhisto->GetXaxis()->SetBinLabel(3,"taumet_energy>25");
-       beackground_cutflowhisto->GetXaxis()->SetBinLabel(4,"taunu_mt > 40");
-       beackground_cutflowhisto->GetXaxis()->SetBinLabel(5,"tau_medium == 1");
-       beackground_cutflowhisto->GetXaxis()->SetBinLabel(6,"tau_isoTight == 1");
-       beackground_cutflowhisto->GetXaxis()->SetBinLabel(7,"tau_n_bjets == 0");
+       background_cutflowhisto->GetXaxis()->SetBinLabel(1,"All");
+       background_cutflowhisto->GetXaxis()->SetBinLabel(2,"tau_pt>25");
+       background_cutflowhisto->GetXaxis()->SetBinLabel(3,"taumet_energy>25");
+       background_cutflowhisto->GetXaxis()->SetBinLabel(4,"taunu_mt > 40");
+       background_cutflowhisto->GetXaxis()->SetBinLabel(5,"tau_medium == 1");
+       background_cutflowhisto->GetXaxis()->SetBinLabel(6,"tau_isoTight == 1");
+       background_cutflowhisto->GetXaxis()->SetBinLabel(7,"tau_n_bjets == 0");
     
     
   TLorentzVector* lep_tau = 0;
@@ -196,28 +196,28 @@ void сreate_tree_and_cutflow()
           
           //if(!((n_mu_e+n_mu_mu)==1 && n_mu_t == 0))continue;
           
-         beackground_cutflowhisto->Fill(1);
+         background_cutflowhisto->Fill(1);
 
           if ( !(mu_pt > 25) ) continue;
-          beackground_cutflowhisto->Fill(2);
+          background_cutflowhisto->Fill(2);
           b_Pt = mu_pt;
 
           if ( !(mumet_energy > 25) ) continue;
-          beackground_cutflowhisto->Fill(3);
+          background_cutflowhisto->Fill(3);
           b_metE =  mu_energy;
           
           if ( !(mu_mt > 40) ) continue;
-          beackground_cutflowhisto->Fill(4);
+          background_cutflowhisto->Fill(4);
           b_Mt=mu_mt;
           
           if( !(mu_medium == 1))continue;
-          beackground_cutflowhisto->Fill(5);
+          background_cutflowhisto->Fill(5);
           
           if( !(mu_isoTight == 1))continue;
-          beackground_cutflowhisto->Fill(6);
+          background_cutflowhisto->Fill(6);
           
           if( !(mu_n_bjets==0))continue;
-          beackground_cutflowhisto->Fill(7);
+          background_cutflowhisto->Fill(7);
           
           if(phi_mu > 3.14159)
                  {
@@ -248,8 +248,8 @@ void сreate_tree_and_cutflow()
    
     
     c->cd(2);
-       beackground_cutflowhisto->Draw();
-       beackground_cutflowhisto->Write();
+       background_cutflowhisto->Draw();
+       background_cutflowhisto->Write();
        b_tree_with_cuts->Write();
 
    // c->SaveAs("/Users/grigorijtolkacev/Desktop/ATLAS/SW/lep_eandtau_minus_pt.pdf");
